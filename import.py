@@ -19,4 +19,4 @@ for Year,Code,Constituency,PC_Electors,Region,Party_Abbreviation,Party,Candidate
 
     print(f"Imported row {i} into table for constituency {Constituency} with index {Index}")
 
-#db.commit() # transactions are assumed, so close the transaction finished
+db.commit() # transactions are assumed, so close the transaction finished
