@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block heading %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+
+<div class="tab-content">
+  <section class="tab-pane fade show active" role="tabpanel" id="signIn">
+    <h2>{{constituency}}</h2>
+    <div>
+      Voter power index = {{voter_index}}
+    </div>
+  </section>
+
+</div>
+
+
+
+{% endblock %}
