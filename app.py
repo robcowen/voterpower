@@ -31,5 +31,11 @@ def postcode_search():
 
     return result.get("parliamentary_constituency")
 
+@app.route('/fancyvisuals', methods=['POST'])
+def fancyvis():
+
+    return "I will do some fancy visuals in this route"
+
+
 if __name__ == '__main__':
     app.run()
