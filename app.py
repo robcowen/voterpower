@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import requests
 import json
 app = Flask(__name__)
@@ -27,9 +27,15 @@ def postcode_search():
 
     result = r['result']
 
-    print(result)
+    constituency = result.get("parliamentary_constituency")
 
-    return result.get("parliamentary_constituency")
+    return redirect("/"+constituency)
+
+@app.route('/<string:constituency>')
+def results(constituency):
+    
+    return constituency
+
 
 if __name__ == '__main__':
     app.run()
