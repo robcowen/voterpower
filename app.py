@@ -6,6 +6,8 @@ import os, csv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
+import urllib
+
 app = Flask(__name__)
 
 engine = create_engine(os.getenv("JAWSDB_URL")) # database engine object from SQLAlchemy that manages connections to the database
@@ -89,7 +91,10 @@ def results(constituency):
     winning_party = results[0][3]
     second_placed_party = results[1][3]
 
-    return render_template("results.html", constituency = constituency, voter_index = voter_index, average_voter_index = average_voter_index, results = results, power_comparison_text = power_comparison_text, second_placed_votes = second_placed_votes, non_winner_votes = non_winner_votes, surplus_votes = surplus_votes, total_wasted_votes = total_wasted_votes, winning_party = winning_party, second_placed_party = second_placed_party, efficiency = efficiency, ranking = ranking)
+    # URL encode constituency for sharing
+    constituency_encode = urllib.parse.quote_plus(constituency)
+
+    return render_template("results.html", constituency = constituency, voter_index = voter_index, average_voter_index = average_voter_index, results = results, power_comparison_text = power_comparison_text, second_placed_votes = second_placed_votes, non_winner_votes = non_winner_votes, surplus_votes = surplus_votes, total_wasted_votes = total_wasted_votes, winning_party = winning_party, second_placed_party = second_placed_party, efficiency = efficiency, ranking = ranking, constituency_encode = constituency_encode)
 
 
 @app.route('/fancyvisuals', methods=['POST'])

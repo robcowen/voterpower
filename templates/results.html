@@ -14,26 +14,24 @@
 {% endblock %}
 
 {% block sharing %}
-<script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5dbf24e4a8d8ff0012dff477&product=inline-share-buttons" async="async"></script>
+<script src="https://kit.fontawesome.com/27bd1a8967.js" crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block content %}
 
 
     <section>
-        <form action="{{ url_for('postcode_search') }}" method="POST">
-            <div class="form-row">
-                <div class="col-11">
-                    <div class="form-group"><input class="form-control" placeholder="Enter your postcode" type="text" name="postcode" required /></div>
-                </div>
-                <div class="col">
-                    <div class="form-group"><button class="btn btn-primary border rounded" type="submit">Go</button></div>
-                </div>
-            </div>
-        </form>
-    </section>
-    <section>
         <div class="container">
+          <form action="{{ url_for('postcode_search') }}" method="POST">
+              <div class="form-row">
+                  <div class="col-11">
+                      <div class="form-group"><input class="form-control" placeholder="Enter your postcode to find out how much your vote is worth" type="text" name="postcode" required /></div>
+                  </div>
+                  <div class="col">
+                      <div class="form-group"><button class="btn btn-primary border rounded" type="submit">Go</button></div>
+                  </div>
+              </div>
+          </form>
             <h1>{{constituency}}</h1>
             <div class="row">
                 <div class="col-9">
@@ -85,17 +83,40 @@
                 </div>
                 <div class="col"></div>
                 <div class="col">
-                    <p>Share your voter power:
-<div class="sharethis-inline-share-buttons"></div><div>
-<small><p>
-  The Voter Power Index is based on research by the New Economics Foundation.</small>
-</p><p>
-  <small>This website was inspired by Martin Petts&#39; voterpower.org.uk website, created for the 2015 general election</small>
-</p>
-</div<br /><br /></small></div>
-            </div>
+                    <p>Share your voter power:</p>
+                    <div id=sharingButtons>
+                      <div>
+                        <i class="fab fa-facebook-square fa-3x" alt="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent('https://voterpower.herokuapp.com/{{constituency}}'),'facebook-share-dialog','width=626,height=436'); return false;"></i>
+                        </div>
+                      <div>
+                        <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=My+vote+is+worth+only+{{voter_index}}+votes.+What%27s+yours+worth%3F+https%3A%2F%2Fvoterpower.herokuapp.com%2F{{constituency_encode}}">
+                        <i class="fab fa-twitter-square fa-3x"></i></a>
+                      </div>
+                      <div>
+                        <a href="https://www.reddit.com/submit?url=https://voterpower.herokuapp.com/{{constituency}}&title=My+vote+is+worth+only+{{voter_index}}+votes.+What%27s+yours+worth%3F">
+                        <i class="fab fa-reddit-square fa-3x"></i></a>
+                      </div>
+                      <div>
+                        <a href="whatsapp://send?text=My vote is worth only {{voter_index}} votes. What's yours worth? https://voterpower.herokuapp.com/{{constituency_encode}}" data-action="share/whatsapp/share">
+                          <i class="fab fa-whatsapp-square fa-3x"></i></a>
+                      </div>
+                    </div>
+                    <p>
+                      <small>The Voter Power Index is based on research by the New Economics Foundation.</small>
+                    </p>
+                    <p>
+                      <small>This website was inspired by Martin Petts&#39; voterpower.org.uk website, created for the 2015 general election</small>
+                    </p>
+                    </div>
         </div>
     </section>
+    <footer>
+      <div class="row">
+        <div class="col">
+          Footer
+        </div>
+      </div>
+    </footer>
 </main>
 
 
