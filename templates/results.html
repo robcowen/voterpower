@@ -4,6 +4,15 @@
   How much is a vote in {{ constituency }} worth?
 {% endblock %}
 
+{% block opengraph %}
+<meta property="fb:app_id"          content="426164098090519" />
+<meta property="og:type"            content="website" />
+<meta property="og:url"             content="https://voterpower.herokuapp.com/{{constituency}}" />
+<meta property="og:title"           content="A vote in {{constituency}} is worth only {{voter_index}} votes" />
+<meta property="og:image"           content="" />
+<meta property="og:description"    content="Under first past the post, not all votes are equal. Find out what your vote is worth and how we can fix this." />
+{% endblock %}
+
 
 {% block content %}
 
