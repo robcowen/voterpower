@@ -44,7 +44,7 @@ def postcode_search():
 @app.route('/<string:constituency>')
 def results(constituency):
 
-    results = db.execute("SELECT * FROM power_index WHERE constituency = :constituency", {"constituency": constituency}).fetchone()
+    results = db.execute("SELECT * FROM power_index WHERE constituency = :constituency AND election_year = 2017", {"constituency": constituency}).fetchone()
 
     voter_index = results.voter_index
 
