@@ -45,7 +45,7 @@ def postcode_search():
 def results(constituency):
 
     # Get power index and constituency_code
-    constituency_response = db.execute("SELECT id, voter_index, constituency_code FROM constituencies WHERE constituency = :constituency AND election_year = 2017", {"constituency": constituency}).fetchone()
+    constituency_response = db.execute("SELECT id, voter_index, constituency_code, ranking FROM constituencies WHERE constituency = :constituency AND election_year = 2017", {"constituency": constituency}).fetchone()
 
     # Get average voter index
     average_voter_index = db.execute("SELECT AVG(voter_index) AS average_voter_index FROM constituencies", {}).fetchone()
@@ -54,6 +54,7 @@ def results(constituency):
     efficiency = round(average_voter_index * 100)
     voter_index = round(constituency_response.voter_index, 4)
     code = constituency_response.constituency_code
+    ranking = constituency_response.ranking
 
     ## Get full 2017 election results for constituency
     results = db.execute("SELECT * FROM results WHERE constituency_code = :code AND election_year = 2017", {"code": code}).fetchall()
@@ -88,7 +89,7 @@ def results(constituency):
     winning_party = results[0][3]
     second_placed_party = results[1][3]
 
-    return render_template("results.html", constituency = constituency, voter_index = voter_index, average_voter_index = average_voter_index, results = results, power_comparison_text = power_comparison_text, second_placed_votes = second_placed_votes, non_winner_votes = non_winner_votes, surplus_votes = surplus_votes, total_wasted_votes = total_wasted_votes, winning_party = winning_party, second_placed_party = second_placed_party, efficiency = efficiency)
+    return render_template("results.html", constituency = constituency, voter_index = voter_index, average_voter_index = average_voter_index, results = results, power_comparison_text = power_comparison_text, second_placed_votes = second_placed_votes, non_winner_votes = non_winner_votes, surplus_votes = surplus_votes, total_wasted_votes = total_wasted_votes, winning_party = winning_party, second_placed_party = second_placed_party, efficiency = efficiency, ranking = ranking)
 
 
 @app.route('/fancyvisuals', methods=['POST'])
