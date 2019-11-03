@@ -14,7 +14,7 @@ i = 0
 for Year, Code, Party, Candidate_Votes in reader: # loop gives each column a name
     i += 1
     if i == 1: continue # Skip first row (headings)
-    db.execute("INSERT INTO results (election_year, constituency_code, party, votes) VALUES (:election_year, :constituency, :party, :votes)",
+    db.execute("INSERT INTO results (election_year, constituency_code, party, votes) VALUES (:election_year, :constituency_code, :party, :votes)",
     {"election_year": Year, "constituency_code": Code, "party": Party, "votes": Candidate_Votes})
 
     print(f"Imported row {i} into table for constituency {Code} and party {Party} with votes {Candidate_Votes}")
