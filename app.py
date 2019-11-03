@@ -51,6 +51,7 @@ def results(constituency):
     average_voter_index = db.execute("SELECT AVG(voter_index) AS avereage_voter_index FROM power_index", {}).fetchone()
 
     average_voter_index = round(average_voter_index[0],4)
+    efficiency = average_voter_index * 100
     voter_index = round(constituency_response.voter_index, 4)
     code = constituency_response.constituency_code
 
@@ -87,7 +88,7 @@ def results(constituency):
     winning_party = results[0][3]
     second_placed_party = results[1][3]
 
-    return render_template("results.html", constituency = constituency, voter_index = voter_index, average_voter_index = average_voter_index, results = results, power_comparison_text = power_comparison_text, second_placed_votes = second_placed_votes, non_winner_votes = non_winner_votes, surplus_votes = surplus_votes, total_wasted_votes = total_wasted_votes, winning_party = winning_party, second_placed_party = second_placed_party)
+    return render_template("results.html", constituency = constituency, voter_index = voter_index, average_voter_index = average_voter_index, results = results, power_comparison_text = power_comparison_text, second_placed_votes = second_placed_votes, non_winner_votes = non_winner_votes, surplus_votes = surplus_votes, total_wasted_votes = total_wasted_votes, winning_party = winning_party, second_placed_party = second_placed_party, efficiency = efficiency)
 
 
 @app.route('/fancyvisuals', methods=['POST'])
