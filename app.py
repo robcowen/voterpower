@@ -51,7 +51,7 @@ def results(constituency):
     average_voter_index = db.execute("SELECT AVG(voter_index) AS avereage_voter_index FROM power_index", {}).fetchone()
 
     average_voter_index = round(average_voter_index[0],4)
-    efficiency = average_voter_index * 100
+    efficiency = round(average_voter_index * 100)
     voter_index = round(constituency_response.voter_index, 4)
     code = constituency_response.constituency_code
 
