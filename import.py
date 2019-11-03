@@ -14,7 +14,7 @@ i = 0
 for Year,Code,Constituency,PC_Electors,Region,Party_Abbreviation,Party,Candidate_Votes,Vote_Share,Total_votes,Majority_Party,Majority,Majority_pc,Probability,Normalised_population,Index in reader: # loop gives each column a name
     i += 1
     if i == 1: continue # Skip first row (headings)
-    db.execute("INSERT INTO power_index (election_year, constituency_code, constituency, constituency_size, winning_party, votes_cast, votes_for_winner, majority_raw, majority_percent, probability, normalised_population, voter_index) VALUES (:election_year, :constituency_code, :constituency, :constituency_size, :winning_party, :votes_cast, :votes_for_winner, :majority_raw, :majority_percent, :probability, :normalised_population, :index)",
+    db.execute("INSERT INTO constituencies (election_year, constituency_code, constituency, constituency_size, winning_party, votes_cast, votes_for_winner, majority_raw, majority_percent, probability, normalised_population, voter_index) VALUES (:election_year, :constituency_code, :constituency, :constituency_size, :winning_party, :votes_cast, :votes_for_winner, :majority_raw, :majority_percent, :probability, :normalised_population, :index)",
     {"election_year": Year, "constituency_code": Code, "constituency": Constituency, "constituency_size": PC_Electors, "winning_party": Party, "votes_cast": Total_votes, "votes_for_winner": Candidate_Votes, "majority_raw": Majority, "majority_percent": Majority_pc, "probability": Probability, "normalised_population": Normalised_population, "index": Index})
 
     print(f"Imported row {i} into table for constituency {Constituency} with index {Index}")

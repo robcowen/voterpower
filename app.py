@@ -45,10 +45,10 @@ def postcode_search():
 def results(constituency):
 
     # Get power index and constituency_code
-    constituency_response = db.execute("SELECT voter_index, constituency_code FROM power_index WHERE constituency = :constituency AND election_year = 2017", {"constituency": constituency}).fetchone()
+    constituency_response = db.execute("SELECT id, voter_index, constituency_code FROM constituencies WHERE constituency = :constituency AND election_year = 2017", {"constituency": constituency}).fetchone()
 
     # Get average voter index
-    average_voter_index = db.execute("SELECT AVG(voter_index) AS avereage_voter_index FROM power_index", {}).fetchone()
+    average_voter_index = db.execute("SELECT AVG(voter_index) AS average_voter_index FROM constituencies", {}).fetchone()
 
     average_voter_index = round(average_voter_index[0],4)
     efficiency = round(average_voter_index * 100)
