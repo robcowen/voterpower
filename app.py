@@ -66,7 +66,7 @@ def results(constituency):
         power_comparison = str(round(voter_index / average_voter_index))
         power_comparison_text = power_comparison+"x more"
 
-        total_votes = 0
+    total_votes = 0
 
     # Get total votes
     for result in results:
