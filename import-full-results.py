@@ -11,12 +11,12 @@ db = scoped_session(sessionmaker(bind=engine))    # create a 'scoped session' th
 f = open("csv/full-2017-results.csv")
 reader = csv.reader(f)
 i = 0
-for Year, Code, Constituency, Party, Candidate_Votes in reader: # loop gives each column a name
+for Year, Code, Party, Candidate_Votes in reader: # loop gives each column a name
     i += 1
     if i == 1: continue # Skip first row (headings)
-    db.execute("INSERT INTO results (election_year, constituency_code, constituency, party, votes) VALUES (:election_year, :constituency_code, :constituency, :party, :votes)",
-    {"election_year": Year, "constituency_code": Code, "constituency": Constituency, "party": Party, "votes": Candidate_Votes})
+    db.execute("INSERT INTO results (election_year, constituency_code, party, votes) VALUES (:election_year, :constituency, :party, :votes)",
+    {"election_year": Year, "constituency_code": Code, "party": Party, "votes": Candidate_Votes})
 
-    print(f"Imported row {i} into table for constituency {Constituency} and party {Party} with votes {Candidate_Votes}")
+    print(f"Imported row {i} into table for constituency {Code} and party {Party} with votes {Candidate_Votes}")
 
 db.commit() # transactions are assumed, so close the transaction finished
