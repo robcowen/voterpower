@@ -1,0 +1,14 @@
+div {
+  border: solid;
+  border-color: grey
+}
+
+#gauge-footer {
+    color: white;
+    text-align: center;
+    background-color: sandybrown;
+  }
+
+#gaugechart {
+  height: 400px;
+}
