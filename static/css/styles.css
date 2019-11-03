@@ -2,3 +2,7 @@
   cursor: pointer;
   color: black;
 }
+#sharingButtons div:hover, #sharingButtons i:hover{
+  cursor: pointer;
+  color: gray;
+}
