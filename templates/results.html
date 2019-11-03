@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  How much is a vote in {{ constituency }} worth?
+{% endblock %}
+
+
+{% block content %}
+
+
+    <section>
+        <form action="{{ url_for('postcode_search') }}" method="POST">
+            <div class="form-row">
+                <div class="col-11">
+                    <div class="form-group"><input class="form-control" placeholder="Enter your postcode" type="text" name="postcode" required /></div>
+                </div>
+                <div class="col">
+                    <div class="form-group"><button class="btn btn-primary border rounded" type="submit">Go</button></div>
+                </div>
+            </div>
+        </form>
+    </section>
+    <section>
+        <div class="container">
+            <h1>{{constituency}}</h1>
+            <div class="row">
+                <div class="col-9">
+                    <div class="row">
+                        <div class="col"><img width="100%" alt="Power gauge: {{voter_index}}" /></div>
+                        <div class="col">
+                            <p>In {{constituency}}, each person&#39;s vote is worth the equivalent of {{voter_index}} votes</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col"><img alt="Average power gauge: {{average_voter_index}}" width="100%" /></div>
+                        <div class="col">
+                            <p>Voters in {{constituency}} have {{power_comparison_text}} voting power than the average UK voter</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h4><br />{{total_wasted_votes}} votes were wasted in {{constituency}} in 2017:<br /><br /></h4>
+                            <ul>
+                                <li class="text-left">{{non_winner_votes}} people did not vote for the winning candidate. Their votes were wasted.</li>
+                                <li class="text-left">The winning {{winning_party}} candidate only needed {{second_placed_votes}} votes to beat the second-placed {{second_placed_party}} candidate, so the {{surplus_votes}} votes they received above this were wasted.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col"><img alt="2017 results pie chart" /></div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h4>It doesn&#39;t have to be like this</h4>
+                            <p>Under a proportional electoral system, every vote can count. The UK's 'first past the post' electoral system is only X% efficient, whereas proportional systems approach 100% efficiency. The New Economics Foundation estimated the UK's 2004 European Elections (which used a proportional system) to be 96.2% efficient.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h4>What do the parties say about electoral reform? (based on 2017 manifestos)</h4>
+                            <ul>
+                                <li class="text-danger">Conservatives &quot;We will retain the first past the post system for voting for parliamentary elections&quot;</li>
+                                <li class="text-warning">Labour: No specific policy</li>
+                                <li class="text-success">Liberal Democrats: &quot;Introduce the Single Transferable Vote for local government elections in England and for electing MPs across the UK.&quot;<br /></li>
+                                <li class="text-success">Green Party: &quot;Introduce proportional representation (PR) for parliamentary and local elections&quot;<br /></li>
+                                <li class="text-success">Brexit Party: No 2017 manifesto, but supports a proportional system for electing MPs</li>
+                                <li class="text-success">Scottish National Party: <br />&quot;We support the replacement of the first-past-the-post system with proportional representation for elections to the House of Commons.&quot;<br /></li>
+                                <li class="text-success">Plaid Cymru: &quot;...reform the voting system so that it is more representative.&quot;<br /></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col"></div>
+                <div class="col">
+                    <p>Share your voter power:<br />Facebook<br />Twitter<br />Instagram</p><small><br />The Voter Power Index is based on research by the New Economics Foundation.<br /><br /><br /></small><small><br />This website was inspired by Martin Petts&#39; voterpower.org.uk website, created for the 2015 general election<br /><br /></small></div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+{% endblock %}
