@@ -44,11 +44,17 @@ def postcode_search():
 @app.route('/<string:constituency>')
 def results(constituency):
 
-    results = db.execute("SELECT * FROM power_index WHERE constituency = :constituency AND election_year = 2017", {"constituency": constituency}).fetchone()
+    # Get power index and constituency_code
+    constituency_response = db.execute("SELECT voter_index, constituency_code FROM power_index WHERE constituency = :constituency AND election_year = 2017", {"constituency": constituency}).fetchone()
 
-    voter_index = results.voter_index
+    voter_index = constituency_response.voter_index
+    code = constituency_response.constituency_code
 
-    return render_template("results.html", constituency = constituency, voter_index = voter_index)
+    results = db.execute("SELECT * FROM results WHERE constituency_code = :code AND election_year = 2017", {"code": code}).fetchall()
+
+    print(results)
+
+    return render_template("results.html", constituency = constituency, voter_index = voter_index, results = results)
 
 
 @app.route('/fancyvisuals', methods=['POST'])

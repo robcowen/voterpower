@@ -1,23 +1,46 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    {{ title }}
+  How much is a vote in {{ constituency }} worth?
 {% endblock %}
 
-{% block heading %}
-    {{ title }}
-{% endblock %}
 
 {% block content %}
 
-<div class="tab-content">
-  <section class="tab-pane fade show active" role="tabpanel" id="signIn">
+<div>
     <h2>{{constituency}}</h2>
     <div>
       Voter power index = {{voter_index}}
     </div>
-  </section>
+    <div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td>
+              Party
+            </td>
+            <td>
+              Votes
+            </td>
+          </tr>
+        </thead>
+        <tbody>
 
+
+      {%for result in results%}
+        <tr>
+          <td>
+            {{result[3]}}
+          </td>
+          <td>
+            {{result[4]}}
+          </td>
+        </tr>
+      {%endfor%}
+
+        </tbody>
+      </table>
+    </div>
 </div>
 
 
