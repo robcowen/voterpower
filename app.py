@@ -103,10 +103,16 @@ def results(constituency):
     return render_template("results.html", constituency = constituency, voter_index = voter_index, average_voter_index = average_voter_index, results = results, power_comparison_text = power_comparison_text, second_placed_votes = second_placed_votes, non_winner_votes = non_winner_votes, surplus_votes = surplus_votes, total_wasted_votes = total_wasted_votes, winning_party = winning_party, second_placed_party = second_placed_party, efficiency = efficiency, ranking = ranking, constituency_encode = constituency_encode, top_five = top_five, bottom_five = bottom_five)
 
 
-@app.route('/fancyvisuals', methods=['POST'])
+@app.route('/fancyvisuals', methods=['POST','GET'])
 def fancyvis():
 
-    return "I will do some fancy visuals in this route"
+    voterPower = float(round(0.818611,3))
+    voterPostCode = "OX2 8EY"
+    voterConst = "Oxford West and Abingdon"
+    safety = "Very marginal"
+
+    return render_template("front.html", voterPower=voterPower, safety=safety, voterConst=voterConst)
+
 
 
 if __name__ == '__main__':
