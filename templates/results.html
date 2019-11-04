@@ -84,7 +84,7 @@
                 <div class="col"></div>
                 <div class="col">
                     <p>Share your voter power:</p>
-                    <div id=sharingButtons>
+                    <div id=sharingButtons class="p-2">
                       <div>
                         <i class="fab fa-facebook-square fa-3x" alt="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent('https://voterpower.herokuapp.com/{{constituency}}'),'facebook-share-dialog','width=626,height=436'); return false;"></i>
                         </div>
@@ -101,13 +101,34 @@
                           <i class="fab fa-whatsapp-square fa-3x"></i></a>
                       </div>
                     </div>
-                    <p>
-                      <small>The Voter Power Index is based on research by the New Economics Foundation.</small>
-                    </p>
-                    <p>
-                      <small>This website was inspired by Martin Petts&#39; voterpower.org.uk website, created for the 2015 general election</small>
-                    </p>
+                    <div class=p-2>
+                      <p>
+                        <small>The Voter Power Index is based on research by the New Economics Foundation.</small>
+                      </p>
+                      <p>
+                        <small>This website was inspired by Martin Petts&#39; voterpower.org.uk website, created for the 2015 general election</small>
+                      </p>
                     </div>
+                    <div>
+                      <h5>Top 5 Constituencies</h5>
+                      <ol>
+                        {% for constituency in top_five %}
+                        <li>
+                          <a href="{{constituency[0]}}">{{constituency[0]}} ({{constituency[1]}})</a>
+                        </li>
+                        {% endfor %}
+                      </ol>
+                      <h5>Bottom 5 Constituencies</h5>
+                      <ol>
+                        {% for constituency in bottom_five %}
+                        <li>
+                          <a href="{{constituency[0]}}">{{constituency[0]}} ({{constituency[1]}})</a>
+                        </li>
+                        {% endfor %}
+                      </ol>
+                    </div>
+
+              </div>
         </div>
     </section>
     <footer>
