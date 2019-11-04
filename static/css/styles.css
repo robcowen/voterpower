@@ -6,3 +6,7 @@
   cursor: pointer;
   color: gray;
 }
+
+.gaugeContainer {
+  height:300px;
+}

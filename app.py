@@ -77,9 +77,25 @@ def results(constituency):
 
     total_votes = 0
 
-    # Get total votes
+    results_dict = {
+        'Conservative': 0,
+        'Labour': 0,
+        'Lib Dem': 0,
+        'Scottish National Party': 0,
+        'Plaid Cymru': 0,
+        'Green': 0,
+        'UKIP': 0,
+        'Independent': 0
+    }
+
     for result in results:
+        # Get total votes
         total_votes += result[4]
+
+        # Create dict of results
+        results_dict[result[3]] = result[4]
+
+
 
     # Votes of second placed candidate
     second_placed_votes = results[1][4]
@@ -100,18 +116,9 @@ def results(constituency):
     # URL encode constituency for sharing
     constituency_encode = urllib.parse.quote_plus(constituency)
 
-    return render_template("results.html", constituency = constituency, voter_index = voter_index, average_voter_index = average_voter_index, results = results, power_comparison_text = power_comparison_text, second_placed_votes = second_placed_votes, non_winner_votes = non_winner_votes, surplus_votes = surplus_votes, total_wasted_votes = total_wasted_votes, winning_party = winning_party, second_placed_party = second_placed_party, efficiency = efficiency, ranking = ranking, constituency_encode = constituency_encode, top_five = top_five, bottom_five = bottom_five)
 
+    return render_template("results.html", constituency = constituency, voter_index = voter_index, average_voter_index = average_voter_index, results = results, power_comparison_text = power_comparison_text, second_placed_votes = second_placed_votes, non_winner_votes = non_winner_votes, surplus_votes = surplus_votes, total_wasted_votes = total_wasted_votes, winning_party = winning_party, second_placed_party = second_placed_party, efficiency = efficiency, ranking = ranking, constituency_encode = constituency_encode, top_five = top_five, bottom_five = bottom_five, results_dict = results_dict)
 
-@app.route('/fancyvisuals', methods=['POST','GET'])
-def fancyvis():
-
-    voterPower = float(round(0.818611,3))
-    voterPostCode = "OX2 8EY"
-    voterConst = "Oxford West and Abingdon"
-    safety = "Very marginal"
-
-    return render_template("front.html", voterPower=voterPower, safety=safety, voterConst=voterConst)
 
 
 
