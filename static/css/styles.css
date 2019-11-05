@@ -1,12 +1,27 @@
 #sharingButtons div, #sharingButtons i{
   cursor: pointer;
-  color: black;
 }
 #sharingButtons div:hover, #sharingButtons i:hover{
   cursor: pointer;
   color: gray;
 }
 
-.gaugeContainer {
-  height:300px;
+#gauge {
+  height:200px;
+}
+
+.fa-facebook-square {
+  color: #4267b2;
+}
+
+.fa-twitter-square {
+  color: #38A1F3;
+}
+
+.fa-reddit-square {
+  color: #ff4500;
+}
+
+.fa-whatsapp-square {
+  color: #25D366;
 }

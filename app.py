@@ -18,7 +18,7 @@ db = scoped_session(sessionmaker(bind=engine))    # create a 'scoped session' th
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    return render_template("index.html", title="What is your vote worth?")
 
 @app.route('/postcode_search', methods=['POST'])
 def postcode_search():

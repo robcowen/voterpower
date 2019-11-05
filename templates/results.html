@@ -7,9 +7,9 @@
 {% block opengraph %}
 <meta property="fb:app_id"          content="426164098090519" />
 <meta property="og:type"            content="website" />
-<meta property="og:url"             content="https://voterpower.herokuapp.com/{{constituency}}" />
+<meta property="og:url"             content="https://www.voterpower.co.uk/{{constituency}}" />
 <meta property="og:title"           content="A vote in {{constituency}} is worth only {{voter_index}} votes" />
-<meta property="og:image"           content="" />
+<meta property="og:image"           content="{{ url_for('static', filename='img/share-image.png') }}" />
 <meta property="og:description"    content="Under first past the post, not all votes are equal. Find out what your vote is worth and how we can fix this." />
 {% endblock %}
 
@@ -25,34 +25,65 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <script type="text/javascript">
+  var resultsData = [
+    ['Party', '% of Vote'],
+    ['Conservatives', {{results_dict['Conservative']}}],
+    ['Labour', {{results_dict['Labour']}}],
+    ['Liberal Democrats', {{results_dict['Lib Dem']}}],
+    ['SNP', {{results_dict['Scottish National Party']}}],
+    ['Plaid Cymru', {{results_dict['Plaid Cymru']}}],
+    ['Green Party', {{results_dict['Green']}}],
+    ['UKIP', {{results_dict['UKIP']}}],
+    ['Independents', {{results_dict['Independent']}}]
+
+  ]
+
+  var resultsOptions = {
+    width: 600,
+    height: 400,
+    title: '2017 General Election',
+    sliceVisibilityThreshold: 0.05,
+    pieSliceTextStyle: {
+      color: 'white',
+    },
+    colors: ['#0087dc', '#d50000', '#FDBB30', '#FFF95D', '#3F8428', '#008066', '#B3009D', '#e8e8e1']
+  };
+
+  var resultsElement = "resultsChart"
+
+
+  var wastedData = [
+    ['Party', '% of Vote'],
+    ['Necessary votes for winner', {{second_placed_votes}}],
+    ['Wasted votes for winner', {{surplus_votes}}],
+    ['Votes for losers', {{non_winner_votes}}]
+
+  ]
+
+  var wastedOptions = {
+    width: 600,
+    height: 400,
+    title: 'Wasted Votes',
+    sliceVisibilityThreshold: 0,
+    pieSliceTextStyle: {
+      color: 'white',
+    },
+    colors: ['green', '#595959', '#000000']
+  };
+
+  var wastedElement = "wastedChart"
+
   google.charts.load("current", {packages:["corechart"]});
-  google.charts.setOnLoadCallback(drawChart);
-  function drawChart() {
-    var data = google.visualization.arrayToDataTable([
-      ['Party', '% of Vote'],
-      ['Conservatives', {{results_dict['Conservative']}}],
-      ['Labour', {{results_dict['Labour']}}],
-      ['Liberal Democrats', {{results_dict['Lib Dem']}}],
-      ['SNP', {{results_dict['Scottish National Party']}}],
-      ['Plaid Cymru', {{results_dict['Plaid Cymru']}}],
-      ['Green Party', {{results_dict['Green']}}],
-      ['UKIP', {{results_dict['UKIP']}}],
-      ['Independents', {{results_dict['Independent']}}]
+  google.charts.setOnLoadCallback(function() {
+    drawChart(resultsData, resultsOptions, resultsElement)});
+  google.charts.setOnLoadCallback(function() {
+    drawChart(wastedData, wastedOptions, wastedElement)});
 
-    ]);
+  function drawChart(data, options, element) {
 
-    var options = {
-      width: 600,
-      height: 400,
-      title: '2017 ',
-      sliceVisibilityThreshold: .05,
-      pieSliceTextStyle: {
-        color: 'black',
-      },
-      colors: ['#0087dc', '#d50000', '#FDBB30', '#FFF95D', '#3F8428', '#008066', '#B3009D', '#e8e8e1']
-    };
+    data = google.visualization.arrayToDataTable(data)
 
-    var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+    var chart = new google.visualization.PieChart(document.getElementById(element));
     chart.draw(data, options);
   }
 
@@ -60,7 +91,7 @@
     id: "gauge",
     value: {{voter_index}},
     min: 0,
-    max: 1,
+    max: 1.68,
     title: "Voter Power",
     formatNumber: true,
     pointer: true,
@@ -100,101 +131,84 @@
       }
   });
 
-  var averageGaugeGraph = new JustGage({
-    id: "averageGauge",
-    value: {{average_voter_index}},
-    min: 0,
-    max: 1,
-    title: "Voter Power",
-    formatNumber: true,
-    pointer: true,
-    pointerOptions: {
-      toplength: -15,
-      bottomlength: 10,
-      bottomwidth: 12,
-      color: '#8e8e93',
-      stroke: '#ffffff',
-      stroke_width: 3,
-      stroke_linecap: 'round'
-    },
-    gaugeWidthScale: 0.6,
-    customSectors: {
-        percents: true,
-        ranges: [{
-          color : "#ff0000",
-          lo : 0,
-          hi : 20
-        },{
-          color : "#ff6f00",
-          lo : 20.1,
-          hi : 40
-        },{
-          color : "#ff6f00",
-          lo : 40.1,
-          hi : 60
-        },{
-          color : "#9dff00",
-          lo : 60.1,
-          hi : 80
-        },{
-          color : "#00b30c",
-          lo : 80.1,
-          hi : 100
-        }]
-      }
-  });
 </script>
 {% endblock %}
 
 {% block content %}
 
+            <div class="row justify-content-center">
+              <div class="col">
+                <form action="{{ url_for('postcode_search') }}" method="POST">
+                    <div class="row p-3">
+                        <div class="col-9">
+                            <div class="form-group"><input class="form-control" placeholder="Enter your postcode" type="text" name="postcode" required /></div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group"><button class="btn btn-primary border rounded" type="submit">Go</button></div>
+                        </div>
+                    </div>
+                </form>
+              </div>
+            </div>
 
-    <section>
-        <div class="container">
-          <form action="{{ url_for('postcode_search') }}" method="POST">
-              <div class="form-row">
-                  <div class="col-11">
-                      <div class="form-group"><input class="form-control" placeholder="Enter your postcode to find out how much your vote is worth" type="text" name="postcode" required /></div>
-                  </div>
-                  <div class="col">
-                      <div class="form-group"><button class="btn btn-primary border rounded" type="submit">Go</button></div>
+
+            <div class="row justify-content-center pb-2">
+              <div class="col text-center">
+                  <h6>Share your voter power</h6>
+                  <div id=sharingButtons class="">
+                      <i class="fab fa-facebook-square fa-3x" alt="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent('https://www.voterpower.co.uk/{{constituency}}'),'facebook-share-dialog','width=626,height=436'); return false;"></i>
+
+                      <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=My+vote+is+worth+only+{{voter_index}}+votes.+What%27s+yours+worth%3F+https%3A%2F%2Fwww.voterpower.co.uk%2F{{constituency_encode}}">
+                      <i class="fab fa-twitter-square fa-3x"></i></a>
+
+                      <a href="https://www.reddit.com/submit?url=https://www.voterpower.co.uk/{{constituency}}&title=My+vote+is+worth+only+{{voter_index}}+votes.+What%27s+yours+worth%3F">
+                      <i class="fab fa-reddit-square fa-3x"></i></a>
+
+                      <a href="whatsapp://send?text=My vote is worth only {{voter_index}} votes. What's yours worth? https://www.voterpower.co.uk/{{constituency_encode}}" data-action="share/whatsapp/share">
+                        <i class="fab fa-whatsapp-square fa-3x"></i></a>
                   </div>
               </div>
-          </form>
-            <h1>{{constituency}}</h1>
-            <div class="row">
-                <div class="col-9">
+            </div>
+              <div class="row">
+                <div class="col">
+                  <h1 class="text-center">In {{constituency}}, each person&#39;s vote is worth the equivalent of {{voter_index}} votes</h1>
+                </div>
+              </div>
                     <div class="row">
-                        <div class="col">
-                            <div id="gauge"></div>
+                        <div class="col-sm-3" id="gauge">
                         </div>
-                        <div class="col">
-                            <p>In {{constituency}}, each person&#39;s vote is worth the equivalent of {{voter_index}} votes</p>
+                        <div class="col-sm-9">
+                          <div class="lead mt-3">
+                            Voters in {{constituency}} have {{power_comparison_text}} voting power than the average UK voter.
+                          </div>
+                          <p class="lead">
+                            {{constituency}} ranks {{ranking}} out of 650 constituencies in the UK
+                          </p>
+
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col"><div id="averageGauge"></div></div>
-                        <div class="col">
-                            <p>Voters in {{constituency}} have {{power_comparison_text}} voting power than the average UK voter</p>
-                            <p>{{constituency}} ranks {{ranking}} out of 650 constituencies in the UK</p>
-                        </div>
-                    </div>
+                    <hr />
                     <div class="row">
                         <div class="col">
-                            <h4><br />{{total_wasted_votes}} votes were wasted in {{constituency}} in 2017:<br /><br /></h4>
+                            <h4>{{total_wasted_votes}} votes were wasted in {{constituency}} in 2017:</h4>
                             <ul>
-                                <li class="text-left">{{non_winner_votes}} people did not vote for the winning candidate. Their votes were wasted.</li>
-                                <li class="text-left">The winning {{winning_party}} candidate only needed {{second_placed_votes}} votes to beat the second-placed {{second_placed_party}} candidate, so the {{surplus_votes}} votes they received above this were wasted.</li>
+                                <li class="text-left">{{non_winner_votes}} people did not vote for the winning candidate. Their votes were wasted, as they could not be used to help their preferred party in another constituency.</li>
+                                <li class="text-left">The winning {{winning_party}} candidate only needed {{second_placed_votes}} votes to beat the second-placed {{second_placed_party}} candidate, so the {{surplus_votes}} votes they received above this were wasted, as they could not be used to help {{winning_party}} candidates in other constituencies.</li>
                             </ul>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col"><div id="donutchart" style="width: 900px; height: 500px;"></div></div>
-                    </div>
-                    <div class="row">
+                      </div>
+                        <div class="row">
+
+                        <div class="col-sm-6" id="resultsChart"></div>
+                        <div class="col-sm-6" id="wastedChart"></div>
+                      </div>
+
+
+                    <div class="row pb-3">
                         <div class="col">
                             <h4>It doesn&#39;t have to be like this</h4>
-                            <p>Under a proportional electoral system, every vote can count. The UK's 'first past the post' electoral system is only {{efficiency}}% efficient, whereas proportional systems approach 100% efficiency. The New Economics Foundation estimated the UK's 2004 European Elections (which used a proportional system) to be 96.2% efficient.</p>
+                            <p>Under a proportional electoral system, every vote can count. The UK's 'first past the post' electoral system is only {{efficiency}}% efficient*, whereas proportional systems approach 100% efficiency, meaning that every vote counts. The New Economics Foundation estimated the UK's 2004 European Elections (which used a proportional system) to be 96.2% efficient.</p>
+                            <pr><small>*The average constituency has only a {{efficiency}}% chance of changing parties at an election.</small></pr>
                         </div>
                     </div>
                     <div class="row">
@@ -211,36 +225,10 @@
                             </ul>
                         </div>
                     </div>
-                </div>
-                <div class="col"></div>
-                <div class="col">
-                    <p>Share your voter power:</p>
-                    <div id=sharingButtons class="p-2">
-                      <div>
-                        <i class="fab fa-facebook-square fa-3x" alt="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent('https://www.voterpower.co.uk/{{constituency}}'),'facebook-share-dialog','width=626,height=436'); return false;"></i>
-                        </div>
-                      <div>
-                        <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=My+vote+is+worth+only+{{voter_index}}+votes.+What%27s+yours+worth%3F+https%3A%2F%2Fwww.voterpower.co.uk%2F{{constituency_encode}}">
-                        <i class="fab fa-twitter-square fa-3x"></i></a>
-                      </div>
-                      <div>
-                        <a href="https://www.reddit.com/submit?url=https://www.voterpower.co.uk/{{constituency}}&title=My+vote+is+worth+only+{{voter_index}}+votes.+What%27s+yours+worth%3F">
-                        <i class="fab fa-reddit-square fa-3x"></i></a>
-                      </div>
-                      <div>
-                        <a href="whatsapp://send?text=My vote is worth only {{voter_index}} votes. What's yours worth? https://www.voterpower.co.uk/{{constituency_encode}}" data-action="share/whatsapp/share">
-                          <i class="fab fa-whatsapp-square fa-3x"></i></a>
-                      </div>
-                    </div>
-                    <div class=p-2>
-                      <p>
-                        <small>The Voter Power Index is based on research by the New Economics Foundation.</small>
-                      </p>
-                      <p>
-                        <small>This website was inspired by Martin Petts&#39; voterpower.org.uk website, created for the 2015 general election</small>
-                      </p>
-                    </div>
-                    <div>
+
+                    <div class="row justify-content-center">
+
+                    <div class="col-sm-3">
                       <h5>Top 5 Constituencies</h5>
                       <ol>
                         {% for constituency in top_five %}
@@ -249,6 +237,8 @@
                         </li>
                         {% endfor %}
                       </ol>
+                    </div>
+                    <div class="col-sm-3">
                       <h5>Bottom 5 Constituencies</h5>
                       <ol>
                         {% for constituency in bottom_five %}
@@ -258,14 +248,27 @@
                         {% endfor %}
                       </ol>
                     </div>
+                    </div>
 
-              </div>
-        </div>
-    </section>
+
     <footer>
       <div class="row">
         <div class="col">
-          Footer
+          <hr />
+          <small>
+            <p>
+              The Voter Power Index is based on research by the New Economics Foundation. <a href="http://m.voterpower.org.uk/files/voter_power_index.pdf" target=_blank>Read about their research here.</a>
+            </p>
+            <p>
+              This website was heavily inspired by (i.e. is a complete rip-off of) Martin Petts&#39; excellent, but sadly now outdated, <a href="http://www.voterpower.org.uk" target=_blank>voterpower.org.uk</a> website, created for the 2015 general election. All credit should go to him.
+            </p>
+            <p>
+              This version of the Voter Power Index website was created by two private UK citizens, Tim and Rob, as a coding project. We both believe that a healthy democracy is one in which every vote counts. The website is not affiliated with any political party, movement or campaign.
+            </p>
+            <p>
+              Would you like to help develop voterpower.co.uk? If so, check out the code on <a href="https://github.com/robcowen/voterpower" target="_blank">Github</a> and contribute to this open source project.
+            </p>
+            </small>
         </div>
       </div>
     </footer>

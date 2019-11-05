@@ -16,18 +16,13 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
       {% block opengraph %}{% endblock %}
-
+      <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
     {% block sharing %}{% endblock %}
 
     <div class="container-fluid">
-      <section class="row">
-        <div class="col">
-          <h1>{% block heading %}{% endblock %}</h1>
-          <div>
             {% block content %}{% endblock %}
-          </div>
           <div class="modal" id="modal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
@@ -43,8 +38,6 @@
               </div>
             </div>
           </div>
-        </div>
-      </section>
     </div>
     {% if modal_title is defined %}
       <script>
