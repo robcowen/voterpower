@@ -7,7 +7,7 @@
 {% block opengraph %}
 <meta property="fb:app_id"          content="426164098090519" />
 <meta property="og:type"            content="website" />
-<meta property="og:url"             content="https://www.voterpower.co.uk/{{constituency}}" />
+<meta property="og:url"             content="https://www.voterpower.co.uk/{{constituency_encode}}" />
 <meta property="og:title"           content="A vote in {{constituency}} is worth only {{voter_index}} votes" />
 <meta property="og:image"           content="{{ url_for('static', filename='img/share-image.png') }}" />
 <meta property="og:description"    content="Under first past the post, not all votes are equal. Find out what your vote is worth and how we can fix this." />
@@ -152,12 +152,12 @@
               <div class="col text-center">
                   <h6>Share your voter power</h6>
                   <div id=sharingButtons class="">
-                      <i class="fab fa-facebook-square fa-3x" alt="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent('https://www.voterpower.co.uk/{{constituency}}'),'facebook-share-dialog','width=626,height=436'); return false;"></i>
+                      <i class="fab fa-facebook-square fa-3x" alt="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent('https://www.voterpower.co.uk/{{constituency_encode}}'),'facebook-share-dialog','width=626,height=436'); return false;"></i>
 
                       <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=My+vote+is+worth+only+{{voter_index}}+votes.+What%27s+yours+worth%3F+https%3A%2F%2Fwww.voterpower.co.uk%2F{{constituency_encode}}">
                       <i class="fab fa-twitter-square fa-3x"></i></a>
 
-                      <a href="https://www.reddit.com/submit?url=https://www.voterpower.co.uk/{{constituency}}&title=My+vote+is+worth+only+{{voter_index}}+votes.+What%27s+yours+worth%3F">
+                      <a href="https://www.reddit.com/submit?url=https://www.voterpower.co.uk/{{constituency_encode}}&title=My+vote+is+worth+only+{{voter_index}}+votes.+What%27s+yours+worth%3F">
                       <i class="fab fa-reddit-square fa-3x"></i></a>
 
                       <a href="whatsapp://send?text=My vote is worth only {{voter_index}} votes. What's yours worth? https://www.voterpower.co.uk/{{constituency_encode}}" data-action="share/whatsapp/share">
@@ -258,7 +258,7 @@
               This website was heavily inspired by (i.e. is a complete rip-off of) Martin Petts&#39; excellent, but sadly now outdated, <a href="http://www.voterpower.org.uk" target=_blank>voterpower.org.uk</a> website, created for the 2015 general election. All credit should go to him.
             </p>
             <p>
-              This version of the Voter Power Index website was created by two private UK citizens, Tim and Rob, as a coding project. We both believe that a healthy democracy is one in which every vote counts. The website is not affiliated with any political party, movement or campaign.
+              This version of the Voter Power Index website was created by two private UK citizens, Tim and Rob, as a coding project. We both believe that a healthy democracy is one in which every vote counts and encourages compromise to be found. The website is not affiliated with any political party, movement or campaign.
             </p>
             <p>
               Would you like to help develop voterpower.co.uk? If so, check out the code on <a href="https://github.com/robcowen/voterpower" target="_blank">Github</a> and contribute to this open source project.
