@@ -114,7 +114,9 @@ def results(constituency):
     second_placed_party = results[1][3]
 
     # URL encode constituency for sharing
-    constituency_encode = urllib.parse.quote_plus(constituency)
+    constituency_encode = constituency.replace(" ", "%20")
+    constituency_encode = urllib.parse.quote_plus(constituency_encode)
+
 
 
     return render_template("results.html", constituency = constituency, voter_index = voter_index, average_voter_index = average_voter_index, results = results, power_comparison_text = power_comparison_text, second_placed_votes = second_placed_votes, non_winner_votes = non_winner_votes, surplus_votes = surplus_votes, total_wasted_votes = total_wasted_votes, winning_party = winning_party, second_placed_party = second_placed_party, efficiency = efficiency, ranking = ranking, constituency_encode = constituency_encode, top_five = top_five, bottom_five = bottom_five, results_dict = results_dict)
