@@ -11,20 +11,13 @@
       gtag('config', 'UA-18542058-14');
 
 
-      function handleOutboundLinkClicks(href) {
-        ga('send', 'event', {
-          eventCategory: 'Outbound Link',
-          eventAction: 'click',
-          eventLabel: href
-        });
-      }
-
       $(document).ready(function() {
         $('a').click(function(){
 
           href = $(this).attr("href")
 
-          handleOutboundLinkClicks(href)
+          ga('send', 'event', 'Outbound Link', 'click', href);
+          
         })
       })
 
