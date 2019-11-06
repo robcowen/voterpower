@@ -152,15 +152,18 @@
               <div class="col text-center">
                   <h6>Share your voter power</h6>
                   <div id=sharingButtons class="">
-                      <i class="fab fa-facebook-square fa-3x" alt="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent('https://www.voterpower.co.uk/{{constituency_encode}}'),'facebook-share-dialog','width=626,height=436'); return false;"></i>
 
-                      <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=My+vote+is+worth+only+{{voter_index}}+votes.+What%27s+yours+worth%3F+https%3A%2F%2Fwww.voterpower.co.uk%2F{{constituency_encode}}">
+                      <a class="facebook-share-button" target="_blank" href="https://www.facebook.com/share.php?u=https%3A%2F%2Fwww.voterpower.co.uk&quote=My+vote+is+worth+only+{{voter_index}}+votes.+What%27s+yours+worth%3F">
+                      <i class="fab fa-facebook-square fa-3x"></i></a>
+
+
+                      <a class="twitter-share-button" target="_blank" href="https://twitter.com/intent/tweet?text=My+vote+is+worth+only+{{voter_index}}+votes.+What%27s+yours+worth%3F+https%3A%2F%2Fwww.voterpower.co.uk%2F{{constituency_encode}}">
                       <i class="fab fa-twitter-square fa-3x"></i></a>
 
-                      <a href="https://www.reddit.com/submit?url=https://www.voterpower.co.uk/{{constituency_encode}}&title=My+vote+is+worth+only+{{voter_index}}+votes.+What%27s+yours+worth%3F">
+                      <a href="https://www.reddit.com/submit?url=https://www.voterpower.co.uk/{{constituency_encode}}&title=My+vote+is+worth+only+{{voter_index}}+votes.+What%27s+yours+worth%3F" target="_blank" >
                       <i class="fab fa-reddit-square fa-3x"></i></a>
 
-                      <a href="whatsapp://send?text=My vote is worth only {{voter_index}} votes. What's yours worth? https://www.voterpower.co.uk/{{constituency_encode}}" data-action="share/whatsapp/share">
+                      <a href="whatsapp://send?text=My vote is worth only {{voter_index}} votes. What's yours worth? https://www.voterpower.co.uk/{{constituency_encode}}" data-action="share/whatsapp/share" target="_blank" >
                         <i class="fab fa-whatsapp-square fa-3x"></i></a>
                   </div>
               </div>

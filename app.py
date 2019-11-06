@@ -115,7 +115,7 @@ def results(constituency):
 
     # URL encode constituency for sharing
     constituency_encode = constituency.replace(" ", "%20")
-    constituency_encode = urllib.parse.quote_plus(constituency_encode)
+    #constituency_encode = urllib.parse.quote_plus(constituency_encode)
 
 
 
