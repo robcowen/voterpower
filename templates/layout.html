@@ -1,5 +1,6 @@
 <html>
   <head>
+    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="e3028cb4-7e6f-4b8c-bb12-5e3cc7c472e1" data-blockingmode="auto" type="text/javascript"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-18542058-14"></script>
@@ -17,7 +18,7 @@
           href = $(this).attr("href")
 
           ga('send', 'event', 'Outbound Link', 'click', href);
-          
+
         })
       })
 
@@ -52,6 +53,28 @@
             </div>
           </div>
     </div>
+    <footer>
+      <div class="row">
+        <div class="col">
+          <hr />
+          <small>
+            <p>
+              The Voter Power Index is based on research by the New Economics Foundation. <a href="http://m.voterpower.org.uk/files/voter_power_index.pdf" target=_blank>Read about their research here.</a>
+            </p>
+            <p>
+              This website was heavily inspired by (i.e. is a complete rip-off of) Martin Petts&#39; excellent, but sadly now outdated, <a href="http://www.voterpower.org.uk" target=_blank>voterpower.org.uk</a> website, created for the 2015 general election. All credit should go to him.
+            </p>
+            <p>
+              This version of the Voter Power Index website was created by two private UK citizens, Tim and Rob, as a coding project. We both believe that a healthy democracy is one in which every vote counts and encourages compromise to be found. The website is not affiliated with any political party, movement or campaign.
+            </p>
+            <p>
+              Would you like to help develop voterpower.co.uk? If so, check out the code on <a href="https://github.com/robcowen/voterpower" target="_blank">Github</a> and contribute to this open source project.
+            </p>
+            </small>
+        </div>
+      </div>
+    </footer>
+    <script id="CookieDeclaration" src="https://consent.cookiebot.com/e3028cb4-7e6f-4b8c-bb12-5e3cc7c472e1/cd.js" type="text/javascript" async></script>
     {% if modal_title is defined %}
       <script>
         $('#modal').modal()
