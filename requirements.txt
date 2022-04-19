@@ -3,7 +3,7 @@ cffi==1.12.3
 chardet==3.0.4
 Click==7.0
 dnspython==1.16.0
-eventlet==0.24.1
+eventlet==0.31.0
 Flask==1.0.2
 Flask-KVSession==0.6.2
 Flask-Session==0.3.1
