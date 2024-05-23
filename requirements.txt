@@ -30,6 +30,8 @@ markupsafe==2.1.5
     # via
     #   jinja2
     #   werkzeug
+mysqlclient==2.1.1
+    # via -r requirements.in
 packaging==24.0
     # via gunicorn
 python-dotenv==1.0.1
