@@ -18,6 +18,8 @@ flask==3.0.3
     #   flask-sqlalchemy
 flask-sqlalchemy==3.1.1
     # via -r requirements.in
+gunicorn==21.2.0
+    # via -r requirements.in
 idna==3.7
     # via requests
 itsdangerous==2.2.0
@@ -28,6 +30,8 @@ markupsafe==2.1.5
     # via
     #   jinja2
     #   werkzeug
+packaging==24.0
+    # via gunicorn
 python-dotenv==1.0.1
     # via -r requirements.in
 requests==2.32.2
