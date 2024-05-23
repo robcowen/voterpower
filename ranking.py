@@ -10,7 +10,7 @@ db = scoped_session(sessionmaker(bind=engine))    # create a 'scoped session' th
 
 results = db.execute("SELECT id, voter_index FROM constituencies ORDER BY voter_index DESC", {}).fetchall()
 
-i = 1 ;
+i = 1
 
 for result in results:
     print (result)

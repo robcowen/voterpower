@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  How much is a vote in {{ constituency }} worth?
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col">
+    <h2>Methodology</h2>
+    <div>
+      <p>
+        This website is based on the voterpower.org.uk website, created by Martin Petts for the 2015 general election. Unfortunately, that website is now outdated and even appears to have been hacked by Russians!
+      </p>
+      <p>
+        The methodology is based on <a href="{{ url_for('static', filename='files/voter_power_index.pdf') }}" target="_blank">research by the New Economics Foundation</a>.
+        They developed a method for calculating the power of a vote in each constituency, based on the likelihood of the seat changing hands and the number of voters in each constituency.
+      </p>
+      <ol>
+        <li>
+          The NEF analysed election results from 1954 to 2005 to calculate the probability of a seat changing hands in a general election, for a particular majority. This raw data is in their <a href="{{ url_for('static', filename='files/voter_power_index.pdf') }}" target="_blank">paper</a>.
+        </li>
+        <li>
+          We took their probability data and applied an exponential regression to it. This gives us a formula for calculating the probability of a seat changing hands, based on the majority: <code>probability = 0.5 exp(-0.112 * majority)</code>.<br/>
+          What does this probability mean? A perfectly marginal seat, with one vote between the leading parties, has a probability of 0.5: i.e. a toss-up.
+        </li>
+        <li>
+          When we built this for the 2019 election, we used the results of the 2017 election and the above equation to calculate probabilities.<br/>
+          Unfortunately, it is not so simple for the 2024 election, because constituency boundaries have changed. To account for this, we have used the <a href="https://en.wikipedia.org/wiki/Notional_results_of_the_2019_United_Kingdom_general_election_by_2024_constituency" target="_blank">notional results as calculated by Railings and Thrasher</a>. These are estimates of what the 2019 results would have been, if the new boundaries had been in place, and are used by the BBC and others.
+        </li>
+        <li>
+          We then doubled the probability to give us a number between 0 and 1. This is the power of a vote in a constituency. A voter power index of 1 represents a voter whose vote is completely efficient: ie if they hadn't voted, the result would have been different. Anything less than 1 represents a voter whose vote could have been more efficient, either because their party won by a large margin, or because their party lost by a large margin. In a proportional system, their vote could instead have been used to help their party win a seat elsewhere.
+        </li>
+        <li>
+          Finally, not all constituencies have the same population, so the voter power index was adjusted to take this into account. This means that a vote in a constituency with a larger population is worth less than a vote in a constituency with a smaller population.
+        </li>
+      </ol>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

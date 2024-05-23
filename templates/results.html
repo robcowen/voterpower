@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block sharing %}
-<script src="https://kit.fontawesome.com/27bd1a8967.js" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/675e31e65c.js" crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block script %}
@@ -25,26 +25,18 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <script type="text/javascript">
-  var resultsData = [
-    ['Party', '% of Vote'],
-    ['Conservatives', {{results_dict['Conservative']}}],
-    ['Labour', {{results_dict['Labour']}}],
-    ['Liberal Democrats', {{results_dict['Lib Dem']}}],
-    ['SNP', {{results_dict['Scottish National Party']}}],
-    ['Plaid Cymru', {{results_dict['Plaid Cymru']}}],
-    ['Green Party', {{results_dict['Green']}}],
-    ['UKIP', {{results_dict['UKIP']}}],
-    ['Independents', {{results_dict['Independent']}}]
+  var resultsData = {{results_array|tojson}}
+  var coloursArray = {{colours_array|tojson}}
 
-  ]
+  console.log(resultsData)
 
   var resultsOptions = {
-    title: '2017 General Election',
+    title: '2019 General Election',
     sliceVisibilityThreshold: 0.05,
     pieSliceTextStyle: {
       color: 'white',
     },
-    colors: ['#0087dc', '#d50000', '#FDBB30', '#FFF95D', '#3F8428', '#008066', '#B3009D', '#e8e8e1']
+    colors: coloursArray
   };
 
   var resultsElement = "resultsChart"
@@ -85,9 +77,9 @@
 
   var gaugeGraph = new JustGage({
     id: "gauge",
-    value: {{voter_index}},
-    min: 0,
-    max: 1.68,
+    value: {{voter_index|round(4)}},
+    min: {{min_voter_index|round(0)}},
+    max: {{max_voter_index|round(1)}},
     title: "Voter Power",
     formatNumber: true,
     pointer: true,
@@ -142,7 +134,11 @@
                         <div class="col-3">
                             <div class="form-group"><button class="btn btn-primary border rounded" type="submit">Go</button></div>
                         </div>
+                        <small class="form-text text-muted">
+                          Your postcode is used only to lookup your parliamentary constituency and is not stored
+                        </small>
                     </div>
+                    
                 </form>
               </div>
             </div>
@@ -158,19 +154,19 @@
 
 
                       <a class="twitter-share-button" target="_blank" href="https://twitter.com/intent/tweet?text=My+vote+is+worth+only+{{voter_index}}+votes.+What%27s+yours+worth%3F+https%3A%2F%2Fwww.voterpower.co.uk">
-                      <i class="fab fa-twitter-square fa-3x"></i></a>
+                        <i class="fa-brands fa-square-x-twitter fa-3x"></i></a>
 
-                      <a href="https://www.reddit.com/submit?url=https://www.voterpower.co.uk/{{constituency_encode}}&title=My+vote+is+worth+only+{{voter_index}}+votes.+What%27s+yours+worth%3F" target="_blank" >
+                      <a href="https://www.reddit.com/submit?url={{url}}&title=My+vote+is+worth+only+{{voter_index}}+votes.+What%27s+yours+worth%3F" target="_blank" >
                       <i class="fab fa-reddit-square fa-3x"></i></a>
 
-                      <a href="whatsapp://send?text=My vote is worth only {{voter_index}} votes. What's yours worth? https://www.voterpower.co.uk/{{constituency_encode}}" data-action="share/whatsapp/share" target="_blank" >
+                      <a href="whatsapp://send?text=My vote is worth only {{voter_index}} votes. What's yours worth? {{url}}" data-action="share/whatsapp/share" target="_blank" >
                         <i class="fab fa-whatsapp-square fa-3x"></i></a>
                   </div>
               </div>
             </div>
               <div class="row">
                 <div class="col">
-                  <h1 class="text-center">In {{constituency}}, each person&#39;s vote is worth the equivalent of {{voter_index}} votes</h1>
+                  <h1 class="text-center">In {{constituency}}, each person has {{voter_index}} votes</h1>
                 </div>
               </div>
                     <div class="row">
@@ -189,10 +185,10 @@
                     <hr />
                     <div class="row">
                         <div class="col">
-                            <h4>{{total_wasted_votes}} votes were wasted in {{constituency}} in 2017:</h4>
+                            <h4>{{"{:,}".format(total_wasted_votes)}} votes were wasted in {{constituency}} in 2019:</h4>
                             <ul>
-                                <li class="text-left">{{non_winner_votes}} people did not vote for the winning candidate. Their votes were wasted, as they could not be used to help their preferred party in another constituency.</li>
-                                <li class="text-left">The winning {{winning_party}} candidate only needed {{second_placed_votes}} votes to beat the second-placed {{second_placed_party}} candidate, so the {{surplus_votes}} votes they received above this were wasted, as they could not be used to help {{winning_party}} candidates in other constituencies.</li>
+                                <li class="text-left">{{"{:,}".format(non_winner_votes)}} people did not vote for the winning candidate. Their votes were wasted, as they could not be used to help their preferred party in another constituency.</li>
+                                <li class="text-left">The winning {{winning_party}} candidate only needed {{"{:,}".format(second_placed_votes)}} votes to beat the second-placed {{second_placed_party}} candidate. This means that the {{"{:,}".format(surplus_votes)}} extra votes they received were wasted, because they could not be used to help {{winning_party}} candidates in other constituencies.</li>
                             </ul>
                         </div>
                       </div>
@@ -206,18 +202,19 @@
                     <div class="row pb-3">
                         <div class="col">
                             <h4>It doesn&#39;t have to be like this</h4>
-                            <p>Under a proportional electoral system, every vote can count. There are many systems available and they are widely used in other countries, in Scotland, Wales, Northern Ireland and London. They're even used for internal elections in the House of Commons. So why can't every vote count when we elect MPs?</p>
+                            <p>Under a proportional electoral system, every vote can count. There are many systems available and they are widely used in other countries, in Scotland, Wales and Northern Ireland. They're even used for internal elections in the House of Commons. So why can't every vote count when we elect MPs?</p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <h4>What do the parties say about electoral reform?</h4>
+                            <p>To be updated as manifestos are published</p>
                             <ul>
                                 <li class="text-danger"><b>Conservatives</b> &quot;We will retain the first past the post system for voting for parliamentary elections&quot; (2017 manifesto)</li>
                                 <li class="text-danger"><b>Labour</b> No specific policy (2019 manifesto)</li>
                                 <li class="text-success"><b>Liberal Democrats</b> &quot;Put an end to wasted votes, by introducing proportional representation through the Single Transferable Vote for electing MPs, and local councillors in England.&quot; (2019 manifesto)</li>
                                 <li class="text-success"><b>Green Party</b> &quot;Replace the First Past the Post system for parliamentary elections with a fair and proportional voting system.&quot; (2019 manifesto)</li>
-                                <li class="text-success"><b>Brexit Party</b> Supports a proportional system for electing MPs</li>
+                                <li class="text-success"><b>Reform UK (Brexit Party)</b> Supports a proportional system for electing MPs (2019 manifesto)</li>
                                 <li class="text-success"><b>Scottish National Party</b> &quot;We support the replacement of the first-past-the-post system with proportional representation for elections to the House of Commons.&quot; (2017 manifesto)</li>
                                 <li class="text-success"><b>Plaid Cymru</b> &quot;...reform the voting system so that it is more representative.&quot; (2017 manifesto)</li>
                             </ul>
@@ -227,21 +224,21 @@
                     <div class="row justify-content-center">
 
                     <div class="col-sm-3">
-                      <h5>Top 5 Constituencies</h5>
+                      <h5>The Most Powerful Voters</h5>
                       <ol>
                         {% for constituency in top_five %}
                         <li>
-                          <a href="{{constituency[0]}}">{{constituency[0]}} ({{constituency[1]}})</a>
+                          <a href="{{url_for('results', constituency=quote_plus(constituency.constituency))}}">{{constituency.constituency}} ({{constituency.voter_index|round(4)}})</a>
                         </li>
                         {% endfor %}
                       </ol>
                     </div>
                     <div class="col-sm-3">
-                      <h5>Bottom 5 Constituencies</h5>
+                      <h5>The Least Powerful Voters</h5>
                       <ol>
                         {% for constituency in bottom_five %}
                         <li>
-                          <a href="{{constituency[0]}}">{{constituency[0]}} ({{constituency[1]}})</a>
+                          <a href="{{url_for('results', constituency=quote_plus(constituency.constituency))}}">{{constituency.constituency}} ({{constituency.voter_index|round(4)}})</a>
                         </li>
                         {% endfor %}
                       </ol>
