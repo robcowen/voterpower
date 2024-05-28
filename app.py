@@ -47,6 +47,10 @@ def postcode_search():
 
     r = r.json()
 
+    # If postcode not found
+    if r['status'] == 404:
+        return render_template("index.html", title="What is your vote worth?", error="Postcode not found - please enter a full, valid UK postcode")
+
     result = r['result']
 
     constituency = result.get("parliamentary_constituency_2024")

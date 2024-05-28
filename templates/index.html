@@ -24,7 +24,7 @@
     <h2>What is your vote worth?</h2>
     <form action="{{ url_for('postcode_search') }}" method="post">
       <div class="form-group">
-        <input class="form-control" placeholder="Enter your postcode" type="text" name="postcode" required />
+        <input class="form-control" placeholder="Enter your full postcode" type="text" name="postcode" required />
         <small class="form-text text-muted">
           Your postcode is used only to lookup your parliamentary constituency and is not stored
         </small>
@@ -33,7 +33,11 @@
       <div class="form-group">
         <button class="btn btn-primary btn-lg" type="submit">Go</button>
       </div>
-
+      {% if error %}
+        <div class="alert alert-danger" role="alert">
+          {{ error }}
+        </div>
+      {% endif %}
     </form>
   </div>
 
