@@ -40,10 +40,8 @@ def postcode_search():
     r = requests.get(
       'https://api.postcodes.io/postcodes/'+postcode)
 
-    if r:
-        print("Success")
-    else:
-        print("Error: API unavailable")
+    if r.status_code > 500:
+        return render_template("index.html", title="What is your vote worth?", error="API error - please try again later")
 
     r = r.json()
 
@@ -55,7 +53,22 @@ def postcode_search():
 
     constituency = result.get("parliamentary_constituency_2024")
 
-    constituency_url_encoded = urllib.parse.quote_plus(constituency)
+    # Try 2019 if 2024 not found
+    if constituency is None:
+        constituency = result.get("parliamentary_constituency")
+
+
+    # If constituency not found
+    if constituency is None:
+        pprint(result)
+        return render_template("index.html", title="What is your vote worth?", error="Constituency not found")
+
+    try:
+        constituency_url_encoded = urllib.parse.quote_plus(constituency)
+    except:
+        print("Error encoding constituency")
+        print(constituency)
+        return render_template("index.html", title="What is your vote worth?", error="Constituency not found")
 
     return redirect(url_for('results', constituency=constituency_url_encoded))
 
