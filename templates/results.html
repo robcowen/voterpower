@@ -185,10 +185,10 @@
                     <hr />
                     <div class="row">
                         <div class="col">
-                            <h4>{{"{:,}".format(total_wasted_votes)}} votes were wasted in {{constituency}} in 2019:</h4>
+                            <h4>{{"{:,}".format(total_wasted_votes)}} voters couldn't help their preferred party in {{constituency}} in 2019:</h4>
                             <ul>
-                                <li class="text-left">{{"{:,}".format(non_winner_votes)}} people did not vote for the winning candidate. Their votes were wasted, as they could not be used to help their preferred party in another constituency.</li>
-                                <li class="text-left">The winning {{winning_party}} candidate only needed {{"{:,}".format(second_placed_votes)}} votes to beat the second-placed {{second_placed_party}} candidate. This means that the {{"{:,}".format(surplus_votes)}} extra votes they received were wasted, because they could not be used to help {{winning_party}} candidates in other constituencies.</li>
+                                <li class="text-left">{{"{:,}".format(non_winner_votes)}} people did not vote for the winning candidate. Under a proportional system, these votes could have helped their preferred party in another constituency.</li>
+                                <li class="text-left">The winning {{winning_party}} candidate only needed {{"{:,}".format(second_placed_votes)}} votes to beat the second-placed {{second_placed_party}} candidate. Under a proportional system the {{"{:,}".format(surplus_votes)}} surplus votes they received could have been used to help {{winning_party}} candidates in other constituencies.</li>
                             </ul>
                         </div>
                       </div>
